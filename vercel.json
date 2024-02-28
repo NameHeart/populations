@@ -2,7 +2,7 @@
   "routes": [
     {
       "src": "/population",
-      "dest": "/server"
+      "dest": "/server/index.js"
     }
   ]
 }
