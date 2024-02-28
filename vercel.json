@@ -1,0 +1,8 @@
+{
+  "routes": [
+    {
+      "src": "/population",
+      "dest": "/server/index.js"
+    }
+  ]
+}
