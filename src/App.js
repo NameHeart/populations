@@ -1,26 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  Cell,
-} from 'recharts';
 import { Slider, Button } from 'antd';
 import './App.css';
 import 'antd/dist/reset.css';
-
-const numberWithCommas = (x) => {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-};
+import CustomBarChart from './CustomBarChart';
 
 function App() {
   const [populationData, setPopulationData] = useState([]);
-  const [selectedYear, setSelectedYear] = useState(1950); // State เก็บปีที่เลือก
+  const [selectedYear, setSelectedYear] = useState(1950);
   const [autoplay, setAutoplay] = useState(false);
 
   useEffect(() => {
@@ -44,9 +31,9 @@ function App() {
         if (selectedYear < Math.max(...uniqueYears)) {
           handleYearChange(selectedYear + 1);
         } else {
-          setAutoplay(false); // หยุด autoplay เมื่อถึงปีสุดท้ายแล้ว
+          setAutoplay(false);
         }
-      }, 500); // เปลี่ยนปีทุกๆ 0.5 วินาที
+      }, 500);
     } else {
       clearInterval(interval);
     }
@@ -54,7 +41,7 @@ function App() {
   }, [autoplay, selectedYear]);
 
   const handleYearChange = (year) => {
-    setSelectedYear(year); // อัปเดต state เมื่อปีถูกเลือก
+    setSelectedYear(year);
   };
 
   // Filter out unwanted country names
@@ -79,7 +66,6 @@ function App() {
     );
   });
 
-  // Filter duplicate countries and years from filtered data
   const uniqueCountries = [
     ...new Set(filteredPopulationData.map((data) => data['Country'])),
   ];
@@ -87,7 +73,6 @@ function App() {
     ...new Set(filteredPopulationData.map((data) => data['Year'])),
   ];
 
-  // Create filtered chart data
   const filteredChartData = [];
   uniqueCountries.forEach((country) => {
     const countryData = { name: country };
@@ -104,12 +89,10 @@ function App() {
     filteredChartData.push(countryData);
   });
 
-  // Sort countries by population in selected year
   const sortedChartData = filteredChartData.sort(
     (a, b) => b[selectedYear] - a[selectedYear]
   );
 
-  // Select only the top 10 countries
   const top10Countries = sortedChartData.slice(0, 12);
 
   const handlePlayButtonClick = () => {
@@ -121,68 +104,23 @@ function App() {
       <h1>Population growth per country 1950 to 2021</h1>
       <div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <BarChart
-            width={1300}
-            height={500}
-            layout='vertical'
+          <CustomBarChart
             data={top10Countries}
-            margin={{ top: 5, right: 60, left: 30, bottom: 5 }}
-          >
-            <XAxis type='number' />
-            <YAxis dataKey='name' type='category' />
-            <CartesianGrid strokeDasharray='3 3' />
-            <Tooltip
-              labelFormatter={(label) => `Contry: ${label}`}
-              formatter={(value) => [
-                `Year: ${selectedYear}`,
-                `Population: ${numberWithCommas(value)}`,
-              ]}
-            />
-            <Legend
-              payload={[
-                {
-                  value: `Year ${selectedYear} - Total Population: ${numberWithCommas(
-                    top10Countries.reduce(
-                      (total, country) => total + country[selectedYear],
-                      0
-                    )
-                  )}`,
-                  type: 'square',
-                  color: '#82ca9d',
-                },
-              ]}
-              formatter={() => {
-                return `Year ${selectedYear} - Total Population: ${numberWithCommas(
-                  top10Countries.reduce(
-                    (total, country) => total + country[selectedYear],
-                    0
-                  )
-                )}`;
-              }}
-            />
-            <Bar
-              dataKey={selectedYear}
-              stackId='a'
-              fill={['#82ca9d']}
-              label={{
-                position: 'right',
-                formatter: numberWithCommas,
-              }}
-            />
-          </BarChart>
+            selectedYear={selectedYear}
+            top10Countries={top10Countries}
+          />
         </div>
         <div className='slider-container'>
           <Button onClick={handlePlayButtonClick}>
             {autoplay ? 'Pause' : 'Play'}
           </Button>
           <Slider
-            style={{ width: '100%' }} // ปรับความกว้างให้เต็มพื้นที่ที่มีอยู่
+            style={{ width: '100%' }}
             min={Math.min(...uniqueYears)}
             max={Math.max(...uniqueYears)}
             step={1}
             value={selectedYear}
             onChange={handleYearChange}
-            tooltipVisible
             className='slider_markers'
             marks={uniqueYears.reduce((acc, year) => {
               acc[year] = year;
