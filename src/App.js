@@ -26,7 +26,9 @@ function App() {
   useEffect(() => {
     async function fetchPopulationData() {
       try {
-        const response = await axios.get('http://localhost:5000/population');
+        const response = await axios.get(
+          'https://populationsdatabase.vercel.app/population'
+        );
         setPopulationData(response.data);
       } catch (error) {
         console.error('Error fetching population data:', error);
@@ -57,7 +59,7 @@ function App() {
 
   // Filter out unwanted country names
   const filteredPopulationData = populationData.filter((data) => {
-    const countryName = data['Country name'];
+    const countryName = data['Country'];
     return !(
       countryName.includes('High-income countries') ||
       countryName.includes('World') ||
@@ -79,7 +81,7 @@ function App() {
 
   // Filter duplicate countries and years from filtered data
   const uniqueCountries = [
-    ...new Set(filteredPopulationData.map((data) => data['Country name'])),
+    ...new Set(filteredPopulationData.map((data) => data['Country'])),
   ];
   const uniqueYears = [
     ...new Set(filteredPopulationData.map((data) => data['Year'])),
@@ -91,7 +93,7 @@ function App() {
     const countryData = { name: country };
     uniqueYears.forEach((year) => {
       const data = filteredPopulationData.find(
-        (item) => item['Country name'] === country && item['Year'] === year
+        (item) => item['Country'] === country && item['Year'] === year
       );
       if (data) {
         countryData[year] = data['Population'];
