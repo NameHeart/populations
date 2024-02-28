@@ -7,6 +7,8 @@ const path = require('path');
 app.use(express.json());
 app.use(cors());
 
+const PORT = process.env.PORT || 5000;
+
 app.get('/population', async (req, res) => {
   try {
     const filePath = path.join(__dirname, 'population-and-demography.csv');
@@ -18,6 +20,10 @@ app.get('/population', async (req, res) => {
     console.error('Error fetching population data:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 module.exports = app;
