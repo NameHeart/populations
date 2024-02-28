@@ -4,6 +4,7 @@ const app = express();
 const XLSX = require('xlsx');
 const path = require('path');
 
+app.use(express.json());
 app.use(cors());
 
 app.get('/population', async (req, res) => {

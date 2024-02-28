@@ -1,7 +1,7 @@
 {
   "routes": [
     {
-      "src": "/database",
+      "src": "/population",
       "dest": "/server/index.js"
     }
   ]
