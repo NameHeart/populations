@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  padding-top: 20px;
 }
 
 .App-logo {
@@ -26,6 +27,13 @@
 
 .App-link {
   color: #61dafb;
+}
+.slider-container {
+  padding: 40px;
+}
+
+.ant-slider-mark-text {
+  font-size: 8.5px; /* ปรับขนาดข้อความตามที่คุณต้องการ */
 }
 
 @keyframes App-logo-spin {

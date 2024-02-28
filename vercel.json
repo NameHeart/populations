@@ -1,0 +1,8 @@
+{
+  "routes": [
+    {
+      "src": "/database",
+      "dest": "/server/index.js"
+    }
+  ]
+}
