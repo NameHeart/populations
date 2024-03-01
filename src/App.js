@@ -44,7 +44,6 @@ function App() {
     setSelectedYear(year);
   };
 
-  // Filter out unwanted country names
   const filteredPopulationData = populationData.filter((data) => {
     const countryName = data['Country'];
     return !(
@@ -93,7 +92,7 @@ function App() {
     (a, b) => b[selectedYear] - a[selectedYear]
   );
 
-  const top10Countries = sortedChartData.slice(0, 12);
+  const top12Countries = sortedChartData.slice(0, 12);
 
   const handlePlayButtonClick = () => {
     setAutoplay(!autoplay);
@@ -105,9 +104,9 @@ function App() {
       <div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <CustomBarChart
-            data={top10Countries}
+            data={top12Countries}
             selectedYear={selectedYear}
-            top10Countries={top10Countries}
+            top10Countries={top12Countries}
           />
         </div>
         <div className='slider-container'>
