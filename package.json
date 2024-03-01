@@ -11,7 +11,6 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.14.2",
     "axios": "^1.6.7",
-    "chart-race-react": "^1.0.2",
     "cors": "^2.8.5",
     "d3": "^7.8.5",
     "d3-scale-chromatic": "^3.0.0",
