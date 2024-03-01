@@ -4,6 +4,7 @@ import { Slider, Button } from 'antd';
 import './App.css';
 import 'antd/dist/reset.css';
 import CustomBarChart from './CustomBarChart';
+import RacingBarChart from './RacingBarChart';
 
 function App() {
   const [populationData, setPopulationData] = useState([]);
@@ -33,7 +34,7 @@ function App() {
         } else {
           setAutoplay(false);
         }
-      }, 500);
+      }, 200);
     } else {
       clearInterval(interval);
     }
@@ -44,6 +45,7 @@ function App() {
     setSelectedYear(year);
   };
 
+  // Filter out unwanted country names
   const filteredPopulationData = populationData.filter((data) => {
     const countryName = data['Country'];
     return !(
@@ -92,7 +94,7 @@ function App() {
     (a, b) => b[selectedYear] - a[selectedYear]
   );
 
-  const top12Countries = sortedChartData.slice(0, 12);
+  const top10Countries = sortedChartData.slice(0, 12);
 
   const handlePlayButtonClick = () => {
     setAutoplay(!autoplay);
@@ -103,10 +105,12 @@ function App() {
       <h1>Population growth per country 1950 to 2021</h1>
       <div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <CustomBarChart
-            data={top12Countries}
+          <RacingBarChart
+            data={top10Countries}
             selectedYear={selectedYear}
-            top10Countries={top12Countries}
+            top10Countries={top10Countries}
+            width={1200}
+            height={500}
           />
         </div>
         <div className='slider-container'>

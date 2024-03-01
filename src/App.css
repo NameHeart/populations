@@ -35,6 +35,13 @@
 .ant-slider-mark-text {
   font-size: 8.5px;
 }
+svg {
+  overflow: visible;
+  display: block;
+  width: 100%; /* ใช้เป็นเปอร์เซ็นต์ของพื้นที่ของ .wrapper */
+  max-width: 1200px; /* กำหนดขนาดสูงสุด */
+  height: auto; /* ให้ความสูงปรับขนาดตามอัตราส่วน */
+}
 
 @keyframes App-logo-spin {
   from {
